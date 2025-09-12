@@ -20,6 +20,13 @@ export interface Transaction {
   status: 'completed' | 'pending' | 'failed';
 }
 
+export interface PortfolioAllocation {
+  sector: string;
+  value: number;
+  percentage: number;
+  color: string;
+}
+
 export interface PortfolioStats {
   totalValue: number;
   totalGainLoss: number;

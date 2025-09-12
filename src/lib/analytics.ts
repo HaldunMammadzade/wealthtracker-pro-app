@@ -1,4 +1,5 @@
-import { Stock, PortfolioAllocation, RiskMetrics } from '@/types';
+import { Stock, PortfolioAllocation } from '@/types';
+import { RiskMetrics } from '@/types/advanced';
 
 export function calculatePortfolioAllocation(stocks: Stock[]): PortfolioAllocation[] {
   const sectorMap: { [key: string]: { value: number; color: string } } = {

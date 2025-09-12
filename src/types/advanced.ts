@@ -26,13 +26,6 @@ export interface PriceAlert {
   createdAt: string;
 }
 
-export interface PortfolioAllocation {
-  sector: string;
-  percentage: number;
-  value: number;
-  color: string;
-}
-
 export interface RiskMetrics {
   beta: number;
   sharpeRatio: number;

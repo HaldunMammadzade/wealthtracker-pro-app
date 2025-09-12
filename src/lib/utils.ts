@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Stock, PortfolioAllocation, RiskMetrics } from '@/types';
+import { Stock, PortfolioAllocation } from '@/types';
+import { RiskMetrics } from '@/types/advanced';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
