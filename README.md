@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+cat > README.md << 'EOF'
+# 🚀 WealthTracker Pro - Enterprise Fintech Dashboard
 
-## Getting Started
+A professional-grade investment portfolio management platform built with Next.js, TypeScript, and modern web technologies. Designed specifically for the Canadian financial market with real-time data, AI-powered insights, and advanced analytics.
 
-First, run the development server:
+## 🌟 Key Features
 
+### 📊 Portfolio Management
+- **Real-time Portfolio Tracking** - Live updates of stock prices and portfolio value
+- **Multi-asset Support** - Stocks, ETFs, mutual funds across TSX, NYSE, NASDAQ
+- **Performance Analytics** - Advanced metrics including Sharpe ratio, beta, VaR
+- **Risk Assessment** - Comprehensive risk analysis with visual dashboards
+
+### 🤖 AI-Powered Insights
+- **Machine Learning Analytics** - Pattern recognition and trend analysis
+- **Intelligent Recommendations** - AI-driven buy/sell/hold suggestions
+- **Market Sentiment Analysis** - Real-time sentiment tracking
+- **Portfolio Optimization** - Automated rebalancing recommendations
+
+### 📈 Advanced Analytics
+- **Performance Attribution** - Detailed breakdown of returns by asset/sector
+- **Risk-Return Analysis** - Efficient frontier visualization
+- **Correlation Matrix** - Asset correlation analysis
+- **Sector Allocation** - Dynamic pie charts and treemaps
+
+### 💼 Trading Interface
+- **Order Book Visualization** - Real-time bid/ask spreads
+- **Quick Trade Execution** - One-click buy/sell orders
+- **Advanced Order Types** - Stop-loss, limit orders, trailing stops
+- **Transaction History** - Comprehensive trade logging
+
+### 🇨🇦 Canadian Market Focus
+- **TSX Integration** - Toronto Stock Exchange data
+- **CAD Currency** - All prices in Canadian dollars
+- **Canadian Banks** - Specialized coverage of RY, TD, BMO, etc.
+- **Regulatory Compliance** - IIROC and CSA guidelines
+
+## 🛠️ Technology Stack
+
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript for type safety
+- **Styling**: Tailwind CSS with custom components
+- **Charts**: Recharts for data visualization
+- **Icons**: Lucide React
+- **State Management**: React hooks and context
+- **Real-time Updates**: WebSocket simulation
+- **Responsive Design**: Mobile-first approach
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn package manager
+
+### Installation
 ```bash
+# Clone the repository
+git clone https://github.com/HaldunMammadzade/wealthtracker-pro-app.git
+cd wealthtracker-pro
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
