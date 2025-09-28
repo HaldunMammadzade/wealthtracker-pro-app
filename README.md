@@ -1,4 +1,4 @@
-cat > README.md << 'EOF'
+
 # 🚀 WealthTracker Pro - Enterprise Fintech Dashboard
 
 A professional-grade investment portfolio management platform built with Next.js, TypeScript, and modern web technologies. Designed specifically for the Canadian financial market with real-time data, AI-powered insights, and advanced analytics.
