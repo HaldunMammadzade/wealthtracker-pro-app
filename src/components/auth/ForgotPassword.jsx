@@ -73,11 +73,11 @@ export default function ForgotPassword({ onBackToLogin }) {
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Check Your Email</h2>
           
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            We've sent a password reset link to <strong>{email}</strong>
+           We&apos;ve sent a password reset link to <strong>{email}</strong>
           </p>
           
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-8">
-            Click the link in the email to reset your password. If you don't see the email, 
+            Click the link in the email to reset your password. If you don&apos;t see the email,
             check your spam folder.
           </p>
 
@@ -91,7 +91,7 @@ export default function ForgotPassword({ onBackToLogin }) {
         </div>
 
         <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-          Didn't receive the email?{' '}
+          Didn&apos;t receive the email?{' '}
           <button
             onClick={() => {
               setIsSuccess(false);
@@ -117,7 +117,7 @@ export default function ForgotPassword({ onBackToLogin }) {
         </div>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Reset Your Password</h2>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Enter your email address and we'll send you a link to reset your password
+         Enter your email address and we&apos;ll send you a link to reset your password
         </p>
       </div>
 
@@ -181,7 +181,7 @@ export default function ForgotPassword({ onBackToLogin }) {
       <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
         <h4 className="font-medium text-blue-900 dark:text-blue-400 mb-2">Need Help?</h4>
         <p className="text-sm text-blue-800 dark:text-blue-300">
-          If you're having trouble resetting your password, please contact our support team at{' '}
+         If you&apos;re having trouble resetting your password, please contact our support team at{' '}
           <a href="mailto:support@wealthtracker.pro" className="font-medium underline">
             support@wealthtracker.pro
           </a>

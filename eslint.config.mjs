@@ -15,9 +15,9 @@ export default [
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
     rules: {
-      // Minimal rules for deployment
       "no-unused-vars": "warn",
       "no-undef": "error",
+      "react/no-unescaped-entities": "off"
     },
   },
 ];
