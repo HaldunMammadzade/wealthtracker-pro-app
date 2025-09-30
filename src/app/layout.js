@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { AuthProvider } from '../contexts/AuthContext';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -31,7 +32,9 @@ export default function RootLayout({ children }) {
         <meta name="apple-mobile-web-app-title" content="WealthTracker Pro" />
       </head>
       <body className={`${inter.className} min-h-screen antialiased`}>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
