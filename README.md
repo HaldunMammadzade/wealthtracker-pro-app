@@ -1,5 +1,7 @@
-cat > README.md << 'EOF'
+
 # 🚀 WealthTracker Pro - Enterprise Fintech Dashboard
+
+Live Demo: https://wealthtracker-pro-app-irz4.vercel.app/
 
 A professional-grade investment portfolio management platform built with Next.js, TypeScript, and modern web technologies. Designed specifically for the Canadian financial market with real-time data, AI-powered insights, and advanced analytics.
 
@@ -38,7 +40,6 @@ A professional-grade investment portfolio management platform built with Next.js
 ## 🛠️ Technology Stack
 
 - **Framework**: Next.js 14 with App Router
-- **Language**: TypeScript for type safety
 - **Styling**: Tailwind CSS with custom components
 - **Charts**: Recharts for data visualization
 - **Icons**: Lucide React
