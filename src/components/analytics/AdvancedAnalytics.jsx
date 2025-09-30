@@ -77,7 +77,7 @@ export default function AdvancedAnalytics({ stocks }) {
           <span>Advanced Analytics</span>
         </CardTitle>
         
-        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg" style={{overflowX: 'auto'}}>
           {[
             { id: 'performance', label: 'Performance', icon: TrendingUp },
             { id: 'risk', label: 'Risk Profile', icon: Shield },
@@ -87,6 +87,7 @@ export default function AdvancedAnalytics({ stocks }) {
             <button
               key={metric.id}
               onClick={() => setActiveMetric(metric.id)}
+              style={{minWidth: 'fit-content'}}
               className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                 activeMetric === metric.id
                   ? 'bg-white text-indigo-600 shadow-sm'
@@ -136,7 +137,7 @@ export default function AdvancedAnalytics({ stocks }) {
               </ResponsiveContainer>
             </div>
             
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 bg-blue-50 rounded-lg">
                 <h5 className="font-medium text-blue-900">30-Day Return</h5>
                 <p className="text-2xl font-bold text-blue-600">+8.42%</p>
@@ -175,7 +176,7 @@ export default function AdvancedAnalytics({ stocks }) {
               </RadarChart>
             </ResponsiveContainer>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {riskRadarData.map((item, index) => (
                 <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                   <span className="font-medium text-gray-900">{item.metric}</span>

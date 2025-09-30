@@ -85,7 +85,7 @@ export default function PortfolioOptimizer({ stocks }) {
           <span>Portfolio Optimizer</span>
         </CardTitle>
         
-        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg overflow-x-auto flex-nowrap">
           {[
             { id: 'efficiency', label: 'Efficiency Frontier' },
             { id: 'rebalance', label: 'Rebalancing' },
@@ -94,7 +94,8 @@ export default function PortfolioOptimizer({ stocks }) {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+              style={{minWidth: 'fit-content'}}
+              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors  ${
                 activeTab === tab.id
                   ? 'bg-white text-blue-600 shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
@@ -185,7 +186,7 @@ export default function PortfolioOptimizer({ stocks }) {
               </BarChart>
             </ResponsiveContainer>
             
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
               <div className="p-3 bg-red-50 rounded-lg">
                 <div className="flex items-center space-x-2">
                   <AlertTriangle className="h-4 w-4 text-red-600" />

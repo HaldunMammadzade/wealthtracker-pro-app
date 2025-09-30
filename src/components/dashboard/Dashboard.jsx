@@ -34,7 +34,7 @@ import LanguageSwitch from '../ui/LanguageSwitch';
 import ChatSupport from '../support/ChatSupport';
 import InstallPrompt from '../pwa/InstallPrompt';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
-import { Activity, Globe, TrendingUp, Bell, Settings, Download, Brain, BarChart3, Zap } from 'lucide-react';
+import { Activity, Globe, TrendingUp, Bell, Settings, Download, Brain, BarChart3, Zap, Menu, X } from 'lucide-react';
 
 export default function Dashboard() {
   const { stocks, isMarketOpen } = useRealTimeData(mockStocks);
@@ -45,6 +45,7 @@ export default function Dashboard() {
   const [sectorAllocation, setSectorAllocation] = useState(calculatePortfolioAllocation(mockStocks));
   const [riskMetrics, setRiskMetrics] = useState(calculateRiskMetrics(mockStocks));
   const [activeView, setActiveView] = useState('overview');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const [showSettings, setShowSettings] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -63,6 +64,18 @@ export default function Dashboard() {
     setRiskMetrics(calculateRiskMetrics(stocks));
   }, [stocks]);
 
+  
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   const updatedStats = {
     ...mockPortfolioStats,
     totalValue: stocks.reduce((sum, stock) => sum + stock.value, 0),
@@ -79,116 +92,222 @@ export default function Dashboard() {
     { id: 'insights', label: t('nav.insights'), icon: Brain }
   ];
 
+  const handleViewChange = (viewId) => {
+    setActiveView(viewId);
+    setMobileMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-500">
-      <header className="glass border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-30">
-        <div className=" mx-auto px-6 py-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center space-x-6">
+      <header className="glass border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-40">
+        <div className="mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <div className="flex items-center justify-between">
+            
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </button>
+
               <div className="flex-shrink-0">
-                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
                   WealthTracker Pro
                 </h1>
-                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <p className="hidden sm:block text-xs text-gray-600 dark:text-gray-400 mt-0.5">
                   {t('header.lastUpdated')}: {currentTime.toLocaleString('en-CA', { 
                     timeZone: 'America/Toronto',
                     hour12: true 
                   })} EST
                 </p>
               </div>
-              
-              <div className="hidden lg:flex space-x-1 bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
-                {views.map((view) => (
-                  <button
-                    key={view.id}
-                    onClick={() => setActiveView(view.id)}
-                    className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-md transition-all ${
-                      activeView === view.id
-                        ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
-                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-600'
-                    }`}
-                  >
-                    <view.icon className="h-4 w-4" />
-                    <span className="hidden xl:inline">{view.label}</span>
-                  </button>
-                ))}
-              </div>
+            </div>
+
+            <div className="hidden lg:flex space-x-1 bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
+              {views.map((view) => (
+                <button
+                  key={view.id}
+                  onClick={() => setActiveView(view.id)}
+                  className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-md transition-all ${
+                    activeView === view.id
+                      ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-600'
+                  }`}
+                >
+                  <view.icon className="h-4 w-4" />
+                  <span>{view.label}</span>
+                </button>
+              ))}
             </div>
             
-            <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center space-x-4 text-sm">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="hidden xl:flex items-center space-x-4 text-sm mr-2">
                 <div className="text-right">
-                  <p className="text-gray-600 dark:text-gray-400">{t('header.marketStatus')}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t('header.marketStatus')}</p>
                   <div className="flex items-center space-x-2">
                     <div className={`w-2 h-2 rounded-full ${isMarketOpen ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
-                    <p className={`font-semibold ${isMarketOpen ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                    <p className={`text-xs font-semibold ${isMarketOpen ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                       {isMarketOpen ? t('header.liveTrading') : t('header.marketClosed')}
                     </p>
                   </div>
                 </div>
-                
-                <div className="text-right">
-                  <p className="text-gray-600 dark:text-gray-400">TSX Composite</p>
-                  <p className="font-semibold text-blue-600 dark:text-blue-400">20,845.67 (+0.34%)</p>
+              </div>
+
+              <div className="hidden sm:flex items-center space-x-2">
+                <LanguageSwitch />
+                <ThemeSwitch />
+                <div className="hidden md:block">
+                  <AdvancedFeaturesToggle 
+                    showAdvanced={showAdvancedFeatures}
+                    onToggle={toggleAdvancedFeatures}
+                  />
                 </div>
               </div>
               
-              <div className="flex items-center space-x-2">
-                <LanguageSwitch />
-                <ThemeSwitch />
-                <AdvancedFeaturesToggle 
-                  showAdvanced={showAdvancedFeatures}
-                  onToggle={toggleAdvancedFeatures}
-                />
-                
-                <button 
-                  onClick={() => setShowNotifications(true)}
-                  className="p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors relative rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-                  title="Notifications"
-                >
-                  <Bell className="h-5 w-5" />
-                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
-                </button>
-                
-                <button 
-                  onClick={() => setShowExport(true)}
-                  className="p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-                  title="Export"
-                >
-                  <Download className="h-5 w-5" />
-                </button>
-                
-                <button 
-                  onClick={() => setShowSettings(true)}
-                  className="p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-                  title="Settings"
-                >
-                  <Settings className="h-5 w-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:hidden mt-4 flex overflow-x-auto space-x-1 bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
-            {views.map((view) => (
-              <button
-                key={view.id}
-                onClick={() => setActiveView(view.id)}
-                className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
-                  activeView === view.id
-                    ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-600'
-                }`}
+              <button 
+                onClick={() => setShowNotifications(true)}
+                className="p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors relative rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                aria-label="Notifications"
               >
-                <view.icon className="h-4 w-4" />
-                <span>{view.label}</span>
+                <Bell className="h-5 w-5" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
               </button>
-            ))}
+              
+              <button 
+                onClick={() => setShowExport(true)}
+                className="hidden sm:block p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                aria-label="Export"
+              >
+                <Download className="h-5 w-5" />
+              </button>
+              
+              <button 
+                onClick={() => setShowSettings(true)}
+                className="p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                aria-label="Settings"
+              >
+                <Settings className="h-5 w-5" />
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
-      <main className=" mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      
+      <div className={`fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white dark:bg-gray-800 shadow-2xl z-40 transform transition-transform duration-300 ease-in-out lg:hidden ${
+        mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
+        <div className="flex flex-col h-full">
+         
+          <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Menu
+            </h2>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+
+         
+          <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 border-b border-gray-200 dark:border-gray-600">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Market Status</p>
+                <div className="flex items-center space-x-2">
+                  <div className={`w-2.5 h-2.5 rounded-full ${isMarketOpen ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
+                  <p className={`text-sm font-semibold ${isMarketOpen ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                    {isMarketOpen ? 'Live Trading' : 'Market Closed'}
+                  </p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-gray-600 dark:text-gray-400">TSX</p>
+                <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">+0.34%</p>
+              </div>
+            </div>
+          </div>
+
+          
+          <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+            {views.map((view) => (
+              <button
+                key={view.id}
+                onClick={() => handleViewChange(view.id)}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${
+                  activeView === view.id
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                }`}
+              >
+                <view.icon className="h-5 w-5" />
+                <span className="font-medium">{view.label}</span>
+              </button>
+            ))}
+
+            <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+              <button
+                onClick={() => {
+                  setShowExport(true);
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center space-x-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all"
+              >
+                <Download className="h-5 w-5" />
+                <span className="font-medium">Export Data</span>
+              </button>
+
+              <div className="px-4 py-2">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+                  Settings
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700 dark:text-gray-300">Language</span>
+                    <LanguageSwitch />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700 dark:text-gray-300">Theme</span>
+                    <ThemeSwitch />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700 dark:text-gray-300">Advanced Features</span>
+                    <AdvancedFeaturesToggle 
+                      showAdvanced={showAdvancedFeatures}
+                      onToggle={toggleAdvancedFeatures}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+         
+          <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+            <div className="text-xs text-center text-gray-500 dark:text-gray-400">
+              <p className="font-semibold">WealthTracker Pro</p>
+              <p className="mt-1">{currentTime.toLocaleTimeString('en-CA', { hour12: true })}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <main className="mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="space-y-6 sm:space-y-8">
           <PortfolioStats stats={updatedStats} />
 
